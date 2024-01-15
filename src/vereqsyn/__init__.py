@@ -2,20 +2,20 @@
 #
 # SPDX-License-Identifier: MIT
 
-from functools import wraps
-from dataclasses import dataclass
-from dataclasses import field
-from packaging.version import Version
-from packaging.version import parse
 import pathlib
 import re
+from dataclasses import dataclass, field
+from functools import wraps
 
+from packaging.version import Version, parse
 
-REQUIREMENTS_TXT_RE = re.compile('^(.+)==(.+)')
-VERSION_CFG_RE = re.compile('^(.+) ?= ?(.+)')
+REQUIREMENTS_TXT_RE = re.compile("^(.+)==(.+)")
+VERSION_CFG_RE = re.compile("^(.+) ?= ?(.+)")
+
 
 def cleanup(func):
     """Decorator: Clean up config file internals after function call."""
+
     @wraps(func)
     def _cleanup(self):
         try:
@@ -23,19 +23,19 @@ def cleanup(func):
         finally:
             self.r_txt.reset()
             self.v_cfg.reset()
+
     return _cleanup
 
 
 @dataclass
-class VersionCfg_RequirementsTxt_Sync:
+class VersionCfgRequirementsTxtSync:
     """Keep a versions.cfg in sync with a requirements.txt file."""
 
-    requirements_txt: str|None = None
-    version_cfg: str|None = None
+    requirements_txt: str | None = None
+    version_cfg: str | None = None
 
     def __post_init__(self):
-        self.r_txt = RequirementsTxt(
-            pathlib.Path(self.requirements_txt).resolve())
+        self.r_txt = RequirementsTxt(pathlib.Path(self.requirements_txt).resolve())
         self.v_cfg = VersionCfg(pathlib.Path(self.version_cfg).resolve())
 
     @cleanup
@@ -68,37 +68,35 @@ class VersionCfg_RequirementsTxt_Sync:
         except ReferenceError:
             self._recreate()
 
+    @cleanup
     def _sync(self):
         """Synchronize requirements.txt with version.cfg."""
         r_exhausted = False
         v_exhausted = False
-        r_package = 'none'
-        try:
-            while True:
-                try:
-                    r_package, r_version = next(self.r_txt)
-                except StopIteration:
-                    r_exhausted = True
-                try:
-                    v_package, v_version = next(self.v_cfg)
-                except StopIteration:
-                    v_exhausted = True
-                if r_exhausted and v_exhausted:
-                    self.r_txt.write()
-                    self.v_cfg.write()
-                    return
-                if r_package != v_package:
-                    raise ReferenceError(
-                        f'Package entries out of order: {r_package} !='
-                        f' {v_package}. Please recreate'
-                        f' {self.requirements_txt}')
-                if r_version > v_version:
-                    self.v_cfg.update_current(r_version)
-                elif v_version > r_version:
-                    self.r_txt.update_current(v_version)
-        finally:
-            self.r_txt.reset()
-            self.v_cfg.reset()
+        r_package = "none"
+        while True:
+            try:
+                r_package, r_version = next(self.r_txt)
+            except StopIteration:
+                r_exhausted = True
+            try:
+                v_package, v_version = next(self.v_cfg)
+            except StopIteration:
+                v_exhausted = True
+            if r_exhausted and v_exhausted:
+                self.r_txt.write()
+                self.v_cfg.write()
+                return
+            if r_package != v_package:
+                msg = (
+                    f"Package entries out of order: {r_package} !="
+                    f" {v_package}. Please recreate {self.requirements_txt}."
+                )
+                raise ReferenceError(msg)
+            if r_version > v_version:
+                self.v_cfg.update_current(r_version)
+            elif v_version > r_version:
+                self.r_txt.update_current(v_version)
 
     @cleanup
     def _recreate(self):
@@ -119,7 +117,9 @@ class ConfigFile:
 
     def __post_init__(self):
         """Configure the instance."""
-        assert self.path.exists()
+        if not self.path.exists():
+            msg = f"{self.path!r} does not exist."
+            raise ValueError(msg)
         self.reset()
 
     def __next__(self) -> tuple[str, Version]:
@@ -128,7 +128,7 @@ class ConfigFile:
         try:
             return self._parse_current_line()
         except EOFError:
-            raise StopIteration
+            raise StopIteration from None
 
     def __iter__(self):
         """Make ourselves an iterator as we provide __next__."""
@@ -151,12 +151,11 @@ class ConfigFile:
 
     def update_current(self, version: Version):
         """Update the version of the current line."""
-        self.current_line = self._format(
-            self._parse_current_line()[0], version)
+        self.current_line = self._format(self._parse_current_line()[0], version)
 
     def write(self):
         """Write changes back to the file."""
-        self.path.write_text('\n'.join(self.lines) + '\n')
+        self.path.write_text("\n".join(self.lines) + "\n")
 
     def reset(self):
         """Reset the internal representation to the beginning of the data."""
@@ -181,8 +180,7 @@ class ConfigFile:
         """
         if self.exhausted:
             raise EOFError
-        while (self.current_line.startswith('#')
-                or not self.current_line):
+        while self.current_line.startswith("#") or not self.current_line:
             self.line_pointer += 1
             if self.exhausted:
                 raise EOFError
@@ -200,7 +198,7 @@ class RequirementsTxt(ConfigFile):
         pass
 
     def _format(self, package: str, version: Version):
-        return f'{package}=={version}'
+        return f"{package}=={version}"
 
 
 class VersionCfg(ConfigFile):
@@ -209,8 +207,8 @@ class VersionCfg(ConfigFile):
     LINE_MATCHER = VERSION_CFG_RE
 
     def _skip_header(self):
-        while not self.current_line.startswith('[versions]'):
+        while not self.current_line.startswith("[versions]"):
             self.line_pointer += 1
 
     def _format(self, package: str, version: Version):
-        return f'{package} = {version}'
+        return f"{package} = {version}"
