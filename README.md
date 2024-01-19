@@ -5,6 +5,13 @@
 
 Bi-directional version.cfg <–> requirements.txt synchronization
 
+This program can be used to synchronize a `versions.cfg` used by
+[zc.buildout](https://pypi.org/project/zc.buildout/) with a `requirements.txt`
+as used by [pip](https://pypi.org/project/pip/).
+
+This is be helpful to keep using `zc.buildout` but get version updates via
+GitHub's Dependabot.
+
 -----
 
 **Table of Contents**
