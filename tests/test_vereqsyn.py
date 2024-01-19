@@ -1,21 +1,10 @@
 import pathlib
-import shutil
 
 import pytest
 
 from vereqsyn import ConfigFile, VersionCfgRequirementsTxtSync
 
-
-@pytest.fixture(scope="session")
-def fixtures() -> pathlib.Path:
-    """Return a pathlib.Path to the fixtures directory."""
-    return pathlib.Path(__file__).parent / "fixtures"
-
-
-def tmp_copy(target: pathlib.Path, src: pathlib.Path) -> pathlib.Path:
-    """Create a copy of ``src`` and return the new path."""
-    shutil.copy(src, target)
-    return target / src.name
+from .testing import tmp_copy
 
 
 def test_VersionCfg_RequirementsTxt_Sync___sync__1(fixtures, tmp_path):

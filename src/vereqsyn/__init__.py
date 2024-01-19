@@ -65,8 +65,10 @@ class VersionCfgRequirementsTxtSync:
         """Re-sync out of sync config files."""
         try:
             self._sync()
+            print(f"Synced {self.v_cfg.path} to {self.r_txt.path}.")
         except ReferenceError:
             self._recreate()
+            print(f"Recreated {self.r_txt.path}.")
 
     @cleanup
     def _sync(self):
