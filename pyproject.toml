@@ -20,7 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
-dependencies = []
+dependencies = ['packaging']
 
 [project.urls]
 Documentation = "https://github.com/minddistrict/vereqsyn#readme"
