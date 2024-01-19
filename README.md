@@ -10,6 +10,7 @@ Bi-directional version.cfg <–> requirements.txt synchronization
 **Table of Contents**
 
 - [Installation](#installation)
+- [Usage](#usage)
 - [Constraints](#constraints)
 - [Hacking](#hacking)
 - [License](#license)
@@ -18,6 +19,13 @@ Bi-directional version.cfg <–> requirements.txt synchronization
 
 ```console
 pip install vereqsyn
+```
+
+## Usage
+
+```console
+vereqsyn --help
+vereqsyn versions.cfg requirements.txt
 ```
 
 ## Constraints
