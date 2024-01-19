@@ -119,7 +119,7 @@ class ConfigFile:
         """Configure the instance."""
         if not self.path.exists():
             msg = f"{self.path!r} does not exist."
-            raise ValueError(msg)
+            raise FileNotFoundError(msg)
         self.reset()
 
     def __next__(self) -> tuple[str, Version]:

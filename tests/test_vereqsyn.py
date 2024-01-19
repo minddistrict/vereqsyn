@@ -3,7 +3,7 @@ import shutil
 
 import pytest
 
-from vereqsyn import VersionCfgRequirementsTxtSync, ConfigFile
+from vereqsyn import ConfigFile, VersionCfgRequirementsTxtSync
 
 
 @pytest.fixture(scope="session")
@@ -86,9 +86,9 @@ def test_VersionCfg_RequirementsTxt_Sync__update__2(fixtures, tmp_path):
     component.update()
     assert component.in_sync()
 
-def test_ConfigFile____post_init____1():
-    """It raises a ValueError, if the given file does not exist."""
-    with pytest.raises(ValueError) as e:
-        ConfigFile(pathlib.Path('i-do-not-exist.cfg'))
-    assert e.match("PosixPath\('i-do-not-exist.cfg'\) does not exist\.")
 
+def test_ConfigFile____post_init____1():
+    """It raises a FileNotFoundError, if the given file does not exist."""
+    with pytest.raises(FileNotFoundError) as e:
+        ConfigFile(pathlib.Path("i-do-not-exist.cfg"))
+    assert e.match(r"PosixPath\('i-do-not-exist.cfg'\) does not exist\.")
