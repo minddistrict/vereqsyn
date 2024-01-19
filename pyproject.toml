@@ -77,6 +77,8 @@ exclude_lines = [
   "if TYPE_CHECKING:",
 ]
 skip_covered = true
+show_missing = true
+fail_under = 100
 
 [tool.ruff]
 # N802: Function name {name} should be lowercase

@@ -11,6 +11,7 @@ Bi-directional version.cfg <–> requirements.txt synchronization
 
 - [Installation](#installation)
 - [Constraints](#constraints)
+- [Hacking](#hacking)
 - [License](#license)
 
 ## Installation
@@ -24,6 +25,14 @@ pip install vereqsyn
 * `version.cfg` is the source of truth. `requirements.txt` can get recreated.
 * So `version.cfg` can contain comments, the ones in `requirements.txt` are
   lost when running recreate.
+
+## Hacking
+
+### Run the tests
+
+```console
+hatch run cov
+```
 
 ## License
 
