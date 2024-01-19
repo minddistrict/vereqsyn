@@ -6,14 +6,14 @@ import vereqsyn
 def main(argv=None):
     parser = argparse.ArgumentParser(
         "vereqsyn",
-        "{prog} <version.cfg> <requirements.txt>",
-        "Bi-directional version.cfg <-> requirements.txt synchronization",
+        "%(prog)s <versions.cfg> <requirements.txt>",
+        "Bi-directional versions.cfg <-> requirements.txt synchronization",
     )
-    parser.add_argument("version_cfg", action="store")
-    parser.add_argument("requirements_txt", action="store")
+    parser.add_argument("versions_cfg", action="store", help="path to versions.cfg")
+    parser.add_argument("requirements_txt", action="store", help="path to requirements.txt")
 
     args = parser.parse_args(argv)
-    command = vereqsyn.VersionCfgRequirementsTxtSync(args.requirements_txt, args.version_cfg)
+    command = vereqsyn.VersionsCfgRequirementsTxtSync(args.requirements_txt, args.versions_cfg)
     command.update()
 
 

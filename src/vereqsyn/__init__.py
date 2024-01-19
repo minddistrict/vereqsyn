@@ -28,7 +28,7 @@ def cleanup(func):
 
 
 @dataclass
-class VersionCfgRequirementsTxtSync:
+class VersionsCfgRequirementsTxtSync:
     """Keep a versions.cfg in sync with a requirements.txt file."""
 
     requirements_txt: str | None = None
