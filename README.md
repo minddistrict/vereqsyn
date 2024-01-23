@@ -50,6 +50,20 @@ vereqsyn versions.cfg requirements.txt
 hatch run cov
 ```
 
+### Run the code formatter
+
+To lint the code:
+
+```console
+hatch fmt
+```
+
+To format the code:
+
+```console
+hatch fmt -f
+```
+
 ## License
 
 `vereqsyn` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
