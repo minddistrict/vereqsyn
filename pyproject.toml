@@ -26,7 +26,7 @@ dependencies = ['packaging']
 Documentation = "https://github.com/minddistrict/vereqsyn#readme"
 Issues = "https://github.com/minddistrict/vereqsyn/issues"
 Source = "https://github.com/minddistrict/vereqsyn"
-changelog = "https://github.com/minddistrict/vereqsyn/CHANGES.md"
+changelog = "https://github.com/minddistrict/vereqsyn/blob/master/CHANGES.md"
 
 [project.scripts]
 vereqsyn = "vereqsyn.__main__:main"
