@@ -35,7 +35,9 @@ class VersionsCfgRequirementsTxtSync:
     version_cfg: str | None = None
 
     def __post_init__(self):
-        self.r_txt = RequirementsTxt(pathlib.Path(self.requirements_txt).resolve())
+        self.r_txt = RequirementsTxt(
+            pathlib.Path(self.requirements_txt).resolve()
+        )
         self.v_cfg = VersionCfg(pathlib.Path(self.version_cfg).resolve())
 
     @cleanup
@@ -187,7 +189,17 @@ class ConfigFile:
             if self.exhausted:
                 raise EOFError
         match = self.LINE_MATCHER.match(self.current_line)
-        package, version = match.groups()
+        try:
+            package, version = match.groups()
+        except AttributeError:
+            if self.current_line.startswith("[versions:python"):
+                error = EOFError
+            else:
+                error = SyntaxError(
+                    f"Cannot parse: {self.path}:{self.line_pointer+1}"
+                    f" {self.current_line}"
+                )
+            raise error from None
         return package.strip(), parse(version)
 
 

@@ -44,8 +44,8 @@ test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 cov-report = [
   "- coverage combine",
-  "coverage report",
   "coverage html",
+  "coverage report",
 ]
 cov = [
   "test-cov",
@@ -88,3 +88,4 @@ fail_under = 100
 # N802: Function name {name} should be lowercase
 # T201: `print` found
 ignore = ["N802", "T201"]
+line-length = 80
