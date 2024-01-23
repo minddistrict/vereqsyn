@@ -64,6 +64,21 @@ To format the code:
 hatch fmt -f
 ```
 
+### Cut a release
+
+* Update `Changes.md`.
+
+* `hatch build`
+
+* ```console
+  cd dist
+  twine upload -r pypi
+  rm vereqsyn-*
+  ```
+* `hatch version <new version number>`
+
+* Update `Changes.md`: Enter new version as unreleased.
+
 ## License
 
 `vereqsyn` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
