@@ -67,7 +67,7 @@ def test_VersionCfg_RequirementsTxt_Sync__in_sync__2(fixtures, r_name, v_name):
 def test_VersionCfg_RequirementsTxt_Sync__in_sync__3(fixtures):
     """It returns `True` if config files are in sync.
 
-    Even if they contain Python a version specific section.
+    Even if the versions.cfg contains Python a version specific section.
     """
     component = VersionsCfgRequirementsTxtSync(
         requirements_txt=fixtures / "r3.txt", version_cfg=fixtures / "v4.cfg"
