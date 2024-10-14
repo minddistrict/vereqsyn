@@ -6,6 +6,8 @@
 
 Bi-directional versions.cfg <–> requirements.txt synchronization
 
+The name ``vereqsyn`` stands for **ve**rsion.cfg **req**irements.txt **syn**chronization.
+
 This program can be used to synchronize a `versions.cfg` used by
 [zc.buildout](https://pypi.org/project/zc.buildout/) with a `requirements.txt`
 as used by [pip](https://pypi.org/project/pip/).
