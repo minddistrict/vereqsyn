@@ -15,10 +15,17 @@ def main(argv=None):
     parser.add_argument(
         "requirements_txt", action="store", help="path to requirements.txt"
     )
+    parser.add_argument(
+        "--versions-section",
+        action="store",
+        help="section in versions.cfg containing the versions"
+        " (default: 'versions')",
+        default="versions",
+    )
 
     args = parser.parse_args(argv)
     command = vereqsyn.VersionsCfgRequirementsTxtSync(
-        args.requirements_txt, args.versions_cfg
+        args.requirements_txt, args.versions_cfg, args.versions_section
     )
     command.update()
 
