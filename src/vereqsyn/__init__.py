@@ -158,9 +158,7 @@ class ConfigFile:
 
     def update_current(self, version: Version):
         """Update the version of the current line."""
-        self.current_line = self._format(
-            self._parse_current_line()[0], version
-        )
+        self.current_line = self._format(self._parse_current_line()[0], version)
 
     def write(self):
         """Write changes back to the file."""
