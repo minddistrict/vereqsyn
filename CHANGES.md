@@ -1,6 +1,10 @@
 # Change log
 
-## 1.1 (unreleased)
+## 1.2 (unreleased)
+
+- No changes yet.
+
+## 1.1 (2025-08-26)
 
 - Add ability to specify a custom version section name in `versions.cfg` file.
 

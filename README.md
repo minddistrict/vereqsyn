@@ -68,18 +68,20 @@ hatch fmt -f
 
 ### Cut a release
 
-* Update `Changes.md`.
+* Update release date in `Changes.md`.
 
 * `hatch build`
 
 * ```console
   cd dist
-  twine upload -r pypi
+  twine upload -r pypi *
   rm vereqsyn-*
   ```
 * `hatch version <new version number>`
 
 * Update `Changes.md`: Enter new version as unreleased.
+
+* Commit and push changes.
 
 ## License
 
