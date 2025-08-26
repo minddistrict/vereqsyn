@@ -68,7 +68,11 @@ hatch fmt -f
 
 ### Cut a release
 
-* Update release date in `Changes.md`.
+* Update release date and maybe version number in `Changes.md`.
+
+* Commit changes.
+
+* Create a git tag.
 
 * `hatch build`
 
