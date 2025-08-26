@@ -2,7 +2,11 @@ import pathlib
 
 import pytest
 
-from vereqsyn import ConfigFile, RequirementsTxt, VersionsCfgRequirementsTxtSync
+from vereqsyn import (
+    ConfigFile,
+    RequirementsTxt,
+    VersionsCfgRequirementsTxtSync,
+)
 
 from .testing import tmp_copy
 
@@ -71,6 +75,18 @@ def test_VersionCfg_RequirementsTxt_Sync__in_sync__3(fixtures):
     """
     component = VersionsCfgRequirementsTxtSync(
         requirements_txt=fixtures / "r3.txt", version_cfg=fixtures / "v4.cfg"
+    )
+    assert component.in_sync()
+
+
+def test_VersionCfg_RequirementsTxt_Sync__in_sync__4(fixtures):
+    """It returns `True` if config files are in sync for custom versions
+    section.
+    """
+    component = VersionsCfgRequirementsTxtSync(
+        requirements_txt=fixtures / "r3.txt",
+        version_cfg=fixtures / "v5.cfg",
+        versions_section="my-versions",
     )
     assert component.in_sync()
 

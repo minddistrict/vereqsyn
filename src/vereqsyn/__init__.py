@@ -31,14 +31,17 @@ def cleanup(func):
 class VersionsCfgRequirementsTxtSync:
     """Keep a versions.cfg in sync with a requirements.txt file."""
 
-    requirements_txt: str | None = None
-    version_cfg: str | None = None
+    requirements_txt: str
+    version_cfg: str
+    versions_section: str = "versions"
 
     def __post_init__(self):
         self.r_txt = RequirementsTxt(
             pathlib.Path(self.requirements_txt).resolve()
         )
-        self.v_cfg = VersionCfg(pathlib.Path(self.version_cfg).resolve())
+        self.v_cfg = VersionCfg(
+            pathlib.Path(self.version_cfg).resolve(), self.versions_section
+        )
 
     @cleanup
     def in_sync(self) -> bool:
@@ -196,7 +199,7 @@ class ConfigFile:
                 error = EOFError
             else:
                 error = SyntaxError(
-                    f"Cannot parse: {self.path}:{self.line_pointer+1}"
+                    f"Cannot parse: {self.path}:{self.line_pointer + 1}"
                     f" {self.current_line}"
                 )
             raise error from None
@@ -215,13 +218,15 @@ class RequirementsTxt(ConfigFile):
         return f"{package}=={version}"
 
 
+@dataclass
 class VersionCfg(ConfigFile):
     """A version.cfg configuration file."""
 
     LINE_MATCHER = VERSION_CFG_RE
+    versions_section: str = "versions"
 
     def _skip_header(self):
-        while not self.current_line.startswith("[versions]"):
+        while not self.current_line.startswith(f"[{self.versions_section}]"):
             self.line_pointer += 1
 
     def _format(self, package: str, version: Version):

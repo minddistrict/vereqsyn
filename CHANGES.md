@@ -2,7 +2,9 @@
 
 ## 1.1 (unreleased)
 
-- Nothing changed, yet.
+- Add ability to specify a custom version section name in `versions.cfg` file.
+
+- Test against Python 3.13.
 
 ## 1.0 (2024-01-23)
 
